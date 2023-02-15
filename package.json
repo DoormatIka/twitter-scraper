@@ -1,6 +1,6 @@
 {
   "name": "@lilyn/twitter-scraper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A twitter scraper for all your needs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
