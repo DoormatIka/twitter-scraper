@@ -1,6 +1,6 @@
 import { CustomBrowser } from "./browser";
 import { ProfileHandler, ProfileTweetsHandler } from "./scraper";
-class TwitterUser {
+export class TwitterUser {
     private profileHandler?: ProfileHandler
     private tweetHandler?: ProfileTweetsHandler
     constructor(
