@@ -13,6 +13,17 @@
     "puppeteer-core": "^19.7.0"
   },
   "files": [
-    "/dist"
+    "/dist",
+    "/LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "directory": "https://github.com/DoormatIka/twitter-scraper.git"
+  },
+  "homepage": "https://github.com/DoormatIka/twitter-scraper",
+  "keywords": [
+    "twitter",
+    "scraper",
+    "web"
   ]
 }
