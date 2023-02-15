@@ -9,7 +9,7 @@ export class TwitterUser {
     ) {}
     async init() {
         const page = await this.browser.newPage();
-        const response = await page.goto(this.at);
+        const response = await page.goto(`https://twitter.com/${this.at}`);
         this.profileHandler = new ProfileHandler(page);
         this.tweetHandler = new ProfileTweetsHandler(page);
 
