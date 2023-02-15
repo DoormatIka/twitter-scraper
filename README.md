@@ -26,3 +26,6 @@ async function main() {
     await browser.close()
 }
 ```
+
+### Note:
+1.0.0 is broken, don't download it. Go with 1.0.1.
