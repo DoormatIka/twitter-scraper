@@ -1,8 +1,7 @@
 # twitter-scraper
 A puppeteer-core powered scraper for Twitter.
 
-[](https://img.shields.io/npm/l/@lilyn/twitter-scraper?style=flat-square)
-[](https://img.shields.io/npm/v/@lilyn/twitter-scraper)
+![](https://img.shields.io/npm/l/@lilyn/twitter-scraper?style=flat-square) ![](https://img.shields.io/npm/v/@lilyn/twitter-scraper?style=flat-square)
 
 
 It's still in a minimal state, will add new features to it soon.
