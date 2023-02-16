@@ -4,13 +4,17 @@
   "description": "A twitter scraper for all your needs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "twitter-scraper": "/dist/bin/cli.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "DoormatIka",
   "license": "MIT",
   "dependencies": {
-    "puppeteer-core": "^19.7.0"
+    "puppeteer-core": "^19.7.0",
+    "yargs": "^17.6.2"
   },
   "files": [
     "/dist",

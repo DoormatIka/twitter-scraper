@@ -1,6 +1,13 @@
 import { CustomBrowser } from "./browser";
 import { ProfileHandler, ProfileTweetsHandler } from "./scraper";
-export class TwitterUser {
+
+/**
+ * An object to interact with the Twitter scraper.
+ * 
+ * @param {CustomBrowser} browser - Custom Browser
+ * @param {at} at - The @ of the user you want to track.
+ */
+export class TwitterUser { // wrapper object
     private profileHandler?: ProfileHandler
     private tweetHandler?: ProfileTweetsHandler
     constructor(
