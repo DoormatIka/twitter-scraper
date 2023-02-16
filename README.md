@@ -26,3 +26,13 @@ async function main() {
     await browser.close()
 }
 ```
+### Planned Features:
+- CLI support
+- Downloading of Twitter videos and images
+- Being able to search users
+- Better Documentation
+
+Feel free to send feature requests in the Issues tab.
+
+### Note:
+1.0.0 is broken, don't download it. Go with 1.0.1.
