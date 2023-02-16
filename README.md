@@ -30,6 +30,7 @@ async function main() {
 - CLI support
 - Downloading of Twitter videos and images
 - Being able to search users
+
 Feel free to send feature requests in the Issues tab.
 
 ### Note:
