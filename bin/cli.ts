@@ -30,7 +30,7 @@ async function main() {
                     }
                 }))
             })
-        .command("getTweetsByPage <number-of-pages> [at]", "Get the tweets of a user by pages.", (y) => {
+        .command("getTweetsByPage <number-of-pages> [at]", "Get the tweets of a user/s by pages.", (y) => {
                 return y
                     .options("at", { 
                         description: "The @ of the Twitter people you want to track.",
@@ -51,6 +51,22 @@ async function main() {
                     await tw.close();
                 }
             })
+        .command("getTweetsUntilID [at] [id]", "Scan every tweet until it encounters the id.", (y) => {
+            return y
+                .options("at", {
+                    description: "The iulgriuagh nw",
+                    type: "string", alias: "@", demandOption: true
+                })
+                .options("id", {
+                    description: "From https://twitter.com/operagxofficial/status/1625463615603216387",
+                    type: "string", demandOption: true
+                })
+        }, async (args) => {
+                const tw = new TwitterUser(browser, args.at);
+                await tw.init();
+                console.log(await tw.getTweetsUntilID(args.id));
+                await tw.close();
+        })
         .help()
         .demandCommand(1)
         .strict()

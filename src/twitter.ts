@@ -18,7 +18,7 @@ export class TwitterUser { // wrapper object
     ) {}
     async init() {
         this.page = await this.browser.newPage();
-        const response = await this.page.goto(`https://twitter.com/${this.at}`);
+        const response = await this.page.goto(`https://twitter.com/${this.at}`, { waitUntil: "networkidle2" });
         this.profileHandler = new ProfileHandler(this.page);
         this.tweetHandler = new ProfileTweetsHandler(this.page);
 
