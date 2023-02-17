@@ -44,7 +44,6 @@ export class ProfileHandler {
     }
 }
 
-// TODO: UNDER THIS CLASS, GET THE FUNCTIONS!
 export class ProfileTweetsHandler {
     constructor(private page: Page) {}
     async getTweetsUntilID(id: string) {
@@ -97,6 +96,10 @@ export class ProfileTweetsHandler {
         const ids = posts.map(v => v.posturl);
         return posts.filter((v, i) => !ids.includes(v.posturl, i + 1));
     }
+}
+
+export class ProfileLiveTracking {
+    
 }
 
 // parse the elements!
