@@ -6,12 +6,13 @@ import { Page, ElementHandle } from "puppeteer-core";
 export class ProfileHandler {
     constructor(private page: Page) {}
     async getProfileInfo() {
+
         await Promise.allSettled([
             this.page.waitForSelector("[data-testid=\"UserName\"] div span"),
             this.page.waitForSelector("[data-testid=\"UserName\"] div:nth-of-type(2) span"),
-            this.page.waitForSelector("[data-testid=\"UserDescription\"]"),
+            // this.page.waitForSelector("[data-testid=\"UserDescription\"]"),
             this.page.waitForSelector("[href$=\"/photo\"] img"),
-            this.page.waitForSelector("[href$=\"/header_photo\"] img"),
+            // this.page.waitForSelector("[href$=\"/header_photo\"] img"),
         ])
         return {
             name: await this.getName(),
@@ -21,23 +22,23 @@ export class ProfileHandler {
             banner: await this.getBanner()
         }
     }
-    async getName() {
+    private async getName() {
         const name = await this.page.$("[data-testid=\"UserName\"] div span");
         return await name?.evaluate(c => c.textContent);
     }
-    async getAt() {
+    private async getAt() {
         const at = await this.page.$("[data-testid=\"UserName\"] div:nth-of-type(2) span");
         return await at?.evaluate(c => c.textContent);
     }
-    async getDescription() {
+    private async getDescription() {
         const description = await this.page.$("[data-testid=\"UserDescription\"]");
         return await description?.evaluate(c => c.textContent);
     }
-    async getProfilePicture() {
+    private async getProfilePicture() {
         const picture = await this.page.$("[href$=\"/photo\"] img");
         return await picture?.evaluate(c => c.src)
     }
-    async getBanner() {
+    private async getBanner() {
         const banner = await this.page.$("[href$=\"/header_photo\"] img");
         return await banner?.evaluate(c => c.src)
     }
@@ -47,11 +48,13 @@ export class ProfileHandler {
 export class ProfileTweetsHandler {
     constructor(private page: Page) {}
     async getTweetsUntilID(id: string) {
+
         await this.page.evaluate('window.scrollTo(0, 30)'); // resets twitter scroll
         const { posts, twtID } = await this.getScrollingTweets(id);
         return { posts: this.removeDuplicates(posts), indexOfPost: twtID }
     }
     async getTweetsbyPage(n: number) {
+
         const posts = []
         for (let i = 0; i < n; i++) {
             await this.scroll();
@@ -95,7 +98,6 @@ export class ProfileTweetsHandler {
         return posts.filter((v, i) => !ids.includes(v.posturl, i + 1));
     }
 }
-
 
 // parse the elements!
 async function parse(tweets: ElementHandle<Element>[]) {
