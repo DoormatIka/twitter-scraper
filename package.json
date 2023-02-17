@@ -16,6 +16,9 @@
     "puppeteer-core": "^19.7.0",
     "yargs": "^17.6.2"
   },
+  "devDependencies": {
+    "@types/yargs": "^17.0.22"
+  },
   "files": [
     "/dist",
     "/LICENSE"

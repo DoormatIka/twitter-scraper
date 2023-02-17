@@ -1,3 +1,4 @@
+import { Page } from "puppeteer-core";
 import { CustomBrowser } from "./browser";
 import { ProfileHandler, ProfileTweetsHandler } from "./scraper";
 
@@ -10,15 +11,16 @@ import { ProfileHandler, ProfileTweetsHandler } from "./scraper";
 export class TwitterUser { // wrapper object
     private profileHandler?: ProfileHandler
     private tweetHandler?: ProfileTweetsHandler
+    private page?: Page
     constructor(
         private browser: CustomBrowser,
         private at: string,
     ) {}
     async init() {
-        const page = await this.browser.newPage();
-        const response = await page.goto(`https://twitter.com/${this.at}`);
-        this.profileHandler = new ProfileHandler(page);
-        this.tweetHandler = new ProfileTweetsHandler(page);
+        this.page = await this.browser.newPage();
+        const response = await this.page.goto(`https://twitter.com/${this.at}`, { waitUntil: "networkidle2" });
+        this.profileHandler = new ProfileHandler(this.page);
+        this.tweetHandler = new ProfileTweetsHandler(this.page);
 
         if (response?.status() != 200) { // i don't know the behavior of page.goto() so im a bit skeptical.
             throw Error(`Can't connect to https://twitter.com/${this.at}! ${response?.statusText}`)
@@ -35,6 +37,10 @@ export class TwitterUser { // wrapper object
     async getProfile() {
         if (!this.profileHandler) throw Error(`Run \`init()\` on TwitterUser \"${this.at}\".`)
         return await this.profileHandler.getProfileInfo()
+    }
+    async close() {
+        if (!this.page) throw Error(`Run \`init()\` on TwitterUser \"${this.at}\".`)
+        await this.page.close();
     }
     toString() {
         return `TwitterUser ${this.at}`
