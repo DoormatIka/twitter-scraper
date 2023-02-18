@@ -23,8 +23,7 @@
   },
   "files": [
     "/dist",
-    "/LICENSE",
-    "/bin"
+    "/LICENSE"
   ],
   "repository": {
     "type": "git",
