@@ -1,16 +1,16 @@
 import { CommandModule } from "yargs";
-import { baseBuilder, Base } from "./base";
+import { Timeouts, Settings, timeouts } from "./base";
 import { tabMaker } from "../helpers/tab";
 import { browsered } from "../helpers/browser";
 import { writeFileSync } from "fs"
 
-interface Arg extends Base {}
+interface Arg extends Timeouts, Settings {}
 
 export const getProfile: CommandModule<unknown, Arg> = {
     command: "getProfile [at]",
     describe: "Get the profile of the user/s.",
     builder: {
-        ...baseBuilder
+        ...timeouts
     },
     handler: async (args) => {
         const browser = await browsered(args.path)

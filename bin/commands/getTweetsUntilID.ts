@@ -1,10 +1,10 @@
 import { CommandModule } from "yargs";
-import { baseBuilder, Base } from "./base";
+import { Timeouts, Settings, timeouts } from "./base";
 import { tabMaker } from "../helpers/tab";
 import { browsered } from "../helpers/browser";
 import { writeFileSync } from "fs"
 
-interface Arg extends Base {
+interface Arg extends Timeouts, Settings {
     id: string[]
 }
 
@@ -16,7 +16,7 @@ export const getTweetsUntilID: CommandModule<unknown, Arg> = {
             description: "The tweet ID from the user.",
             demandOption: true, type: "string", array: true
         },
-        ...baseBuilder
+        ...timeouts
     },
     handler: async (args) => {
         const browser = await browsered(args.path)

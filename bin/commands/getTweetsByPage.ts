@@ -1,11 +1,10 @@
 import { CommandModule } from "yargs";
-import { CustomBrowser } from "../../src/browser";
-import { baseBuilder, Base } from "./base";
+import { Timeouts, Settings, timeouts } from "./base";
 import { tabMaker } from "../helpers/tab";
 import { browsered } from "../helpers/browser";
 import { writeFileSync } from "fs"
 
-interface Arg extends Base {
+interface Arg extends Timeouts, Settings {
     pages: number
 }
 
@@ -17,7 +16,7 @@ export const getTweetsByPage: CommandModule<unknown, Arg> = {
             alias: "n", description: "The amount of pages to scrape.",
             type: "number", demandOption: true
         },
-        ...baseBuilder
+        ...timeouts
     },
     
     handler: async (args) => {

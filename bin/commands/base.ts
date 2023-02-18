@@ -1,9 +1,13 @@
 import { CommandBuilder, Arguments } from "yargs";
 
-export interface Base extends Arguments {
-    at: string[], timeout: number | undefined, path: string, filepath: string | undefined
+export interface Timeouts extends Arguments {
+    at: string[], timeout: number | undefined
 }
-export const baseBuilder: CommandBuilder<unknown, Base> = {
+export interface Settings extends Arguments {
+    path: string, filepath: string | undefined
+}
+
+export const timeouts: CommandBuilder<unknown, Timeouts> = {
     at: {
         description: "The Twitter @ of the User.",
         alias: "@", array: true, demandOption: true,
@@ -13,6 +17,8 @@ export const baseBuilder: CommandBuilder<unknown, Base> = {
         description: "How much time (30000ms multiplied by x) puppeteer will wait for the site to load.",
         type: "number", alias: "t"
     },
+}
+export const settings: CommandBuilder<unknown, Timeouts & Settings> = {
     path: {
         description: "The file path of your chrome browser!",
         default: "C:/Program Files/Google/Chrome/Application/chrome.exe",
