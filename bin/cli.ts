@@ -1,42 +1,23 @@
 #!/usr/bin/env node
 // npx twitter-scraper to test
 // todo: detect suspended accounts
-import yargs from "yargs/yargs";
+import yargs from "yargs";
+import { cpuUsage } from "os-utils"
 import { TwitterUser } from "../src/twitter";
 import { hideBin } from "yargs/helpers";
 import { CustomBrowser } from "../src/browser";
+import { getProfile } from "./commands/getProfile";
 
 async function main() {
+
+    const start = performance.now();
     const browser = new CustomBrowser();
     await browser.init({ headless: false, execPath: "C:/Program Files/Google/Chrome/Application/chrome.exe" })
-
+    
     // [] for options, <> for positionals
     await yargs(hideBin(process.argv))
 
-        .command("getProfile [timeout] [at]", "Get the profile of the user/s.", (y) => {
-                return y
-                    .options("at", { 
-                        description: "The @ of the Twitter people you want to track.\nUsage: twitter-scraper getProfile --at LilynHana --at AA",
-                        array: true, type: "string",
-                        alias: "@", demandOption: true
-                    })
-                    .options("timeout", {
-                        description: "How much time (multiplied by x) puppeteer will wait for the site to load.",
-                        type: "number", alias: "t"
-                    })
-            }, async (args) => {
-                const tabs = []
-                for (const at of args.at) {
-                    console.log(`@${at}: Loading.`)
-                    tabs.push(tabMaker(browser, at, (tw) => tw.getProfile(), args.timeout));
-                }
-                const a = await Promise.allSettled(tabs);
-                console.log(a.map(c => {
-                    if (c.status === "fulfilled") {
-                        return c.value
-                    }
-                }))
-            })
+        .command(getProfile)
         .command("getTweetsByPage <number-of-pages> [at]", "Get the tweets of a user/s by pages.", (y) => {
                 return y
                     .options("at", { 
@@ -80,9 +61,76 @@ async function main() {
         .parse();
     
     await browser.close();
+
+    const end = performance.now();
+    const ms = end - start
+    const second = ms * 0.001;
+    const minute = second * 0.01667;
+    console.log(`Execution time: ${round(ms)} ms | ${round(second)} second/s | ${round(minute)} minute/s`)
 }
 main();
 
+async function perfCheck() {
+    const firefox = "C:/Program Files/Mozilla Firefox/firefox.exe";
+    const chrome = "C:/Program Files/Google/Chrome/Application/chrome.exe";
+
+    const start = performance.now();
+    const browser = new CustomBrowser();
+    await browser.init({ headless: false, execPath: chrome })
+    const users = [
+        "LilynHana", "haiyame_20c", "operagxofficial", "kunitoro",
+        "Rannument", "voicemod", "PowerWashSim", "Ebaweba"
+    ]
+
+    for (let u = 0; u < users.length; u++) {
+        for (let i = 0; i < 3; i++) {
+            const filtered = users.filter((_, index) => index > u);
+            console.log(`Number of users: ${filtered.length}`)
+            await loadProfiles(browser, { 
+                at: filtered,
+                timeout: 2
+            });
+            await wait(5000);
+
+            cpuUsage((percentage) => console.log(`CPU Usage: ${percentage}%`));
+            console.log(`RSS: ${process.memoryUsage().rss / 1024 / 1024} MB`);
+            console.log(`External: ${process.memoryUsage().external / 1024 / 1024} MB`);
+            console.log(`===========`);
+        }
+    }
+    const end = performance.now();
+    const ms = end - start
+    const second = ms * 0.001;
+    const minute = second * 0.01667;
+    console.log(`Total Execution time: ${round(ms)} ms | ${round(second)} second/s | ${round(minute)} minute/s`)
+}
+perfCheck()
+
+async function loadProfiles(browser: CustomBrowser, args: { at: string[], timeout: number }) {
+    const start = performance.now();
+    
+    const tabs = []
+    for (const at of args.at) {
+        // console.log(`@${at}: Loading.`)
+        tabs.push(tabMaker(browser, at, (tw) => tw.getProfile(), args.timeout));
+    }
+    const a = await Promise.allSettled(tabs);
+    a.map(c => {
+        if (c.status === "fulfilled") {
+            return c.value
+        }}
+    )
+
+    const end = performance.now();
+    const ms = end - start
+    const second = ms * 0.001;
+    const minute = second * 0.01667;
+    console.log(`Execution time: ${round(ms)} ms | ${round(second)} second/s | ${round(minute)} minute/s`)
+}
+
+async function wait(ms: number) {
+    return new Promise((res) => setTimeout(res, ms));
+}
 async function tabMaker<T>(browser: CustomBrowser, at: string, callback: (tw: TwitterUser) => Promise<T>, timeout?: number) {
     return new Promise<T>(async (res, rej) => {
         const tw = new TwitterUser(browser, at, 30000 * (timeout ?? 1));
@@ -91,4 +139,7 @@ async function tabMaker<T>(browser: CustomBrowser, at: string, callback: (tw: Tw
         await tw.close();
         res(data)
     })
+}
+function round(num: number) {
+    return (Math.round(num * 100)) / 100;
 }
