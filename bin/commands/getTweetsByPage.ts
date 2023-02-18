@@ -20,7 +20,7 @@ export const getTweetsByPage: CommandModule<unknown, Arg> = {
     },
     
     handler: async (args) => {
-        const browser = await browsered(args.path)
+        const browser = await browsered(args.path, args.headless)
         const tabs = [];
         for (const at of args.at) {
             console.log(`@${at}: Loading.`)

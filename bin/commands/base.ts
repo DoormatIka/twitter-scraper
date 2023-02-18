@@ -1,10 +1,10 @@
 import { CommandBuilder, Arguments } from "yargs";
 
 export interface Timeouts extends Arguments {
-    at: string[], timeout: number | undefined
+    at: string[], timeout: number | undefined,
 }
 export interface Settings extends Arguments {
-    path: string, filepath: string | undefined
+    path: string, filepath: string | undefined, headless: boolean,
 }
 
 export const timeouts: CommandBuilder<unknown, Timeouts> = {
@@ -18,7 +18,7 @@ export const timeouts: CommandBuilder<unknown, Timeouts> = {
         type: "number", alias: "t"
     },
 }
-export const settings: CommandBuilder<unknown, Timeouts & Settings> = {
+export const settings: CommandBuilder<unknown, Settings> = {
     path: {
         description: "The file path of your chrome browser!",
         default: "C:/Program Files/Google/Chrome/Application/chrome.exe",
@@ -27,5 +27,10 @@ export const settings: CommandBuilder<unknown, Timeouts & Settings> = {
     filepath: {
         description: "The file path to write the results on! Note: Needs full file path!",
         type: "string"
+    },
+    headless: {
+        description: "If puppeteer would show the window it's working on.",
+        default: true,
+        type: "boolean"
     }
 }

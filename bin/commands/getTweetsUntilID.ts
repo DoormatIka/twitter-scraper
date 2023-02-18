@@ -19,7 +19,7 @@ export const getTweetsUntilID: CommandModule<unknown, Arg> = {
         ...timeouts
     },
     handler: async (args) => {
-        const browser = await browsered(args.path)
+        const browser = await browsered(args.path, args.headless)
     
         const tabs = []
         for (let i = 0; i < args.at.length; ++i) {
