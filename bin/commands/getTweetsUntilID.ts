@@ -4,21 +4,27 @@ import { tabMaker } from "../helpers/tab";
 import { browsered } from "../helpers/browser";
 import { writeFileSync } from "fs"
 
-interface Arg extends Base {}
+interface Arg extends Base {
+    id: string[]
+}
 
-export const getProfile: CommandModule<unknown, Arg> = {
-    command: "getProfile [at]",
-    describe: "Get the profile of the user/s.",
+export const getTweetsUntilID: CommandModule<unknown, Arg> = {
+    command: "getTweetsUntilID [at] [id]",
+    describe: "Scan every tweet until it encounters the id. Example: getTweetsUntilID -@ LilynHana -id 9342084 -@ Soleil -id 89734",
     builder: {
+        id: {
+            description: "The tweet ID from the user.",
+            demandOption: true, type: "string", array: true
+        },
         ...baseBuilder
     },
     handler: async (args) => {
         const browser = await browsered(args.path)
     
         const tabs = []
-        for (const at of args.at) {
-            console.log(`@${at}: Loading.`)
-            tabs.push(tabMaker(browser, at, (tw) => tw.getProfile(), args.timeout));
+        for (let i = 0; i < args.at.length; ++i) {
+            console.log(`@${args.at[i]}: Loading.`);
+            tabs.push(tabMaker(browser, args.at[i], (tw) => tw.getTweetsUntilID(args.id[i]), args.timeout));
         }
 
         const data = (await Promise.allSettled(tabs)).map(c => {

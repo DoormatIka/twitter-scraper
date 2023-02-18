@@ -1,7 +1,7 @@
-import yargs, { CommandBuilder, Arguments } from "yargs";
+import { CommandBuilder, Arguments } from "yargs";
 
 export interface Base extends Arguments {
-    at: string, timeout: number | undefined
+    at: string[], timeout: number | undefined, path: string, filepath: string | undefined
 }
 export const baseBuilder: CommandBuilder<unknown, Base> = {
     at: {
@@ -16,6 +16,10 @@ export const baseBuilder: CommandBuilder<unknown, Base> = {
     path: {
         description: "The file path of your chrome browser!",
         default: "C:/Program Files/Google/Chrome/Application/chrome.exe",
+        type: "string"
+    },
+    filepath: {
+        description: "The file path to write the results on! Note: Needs full file path!",
         type: "string"
     }
 }
