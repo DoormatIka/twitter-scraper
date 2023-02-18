@@ -13,15 +13,18 @@
   "author": "DoormatIka",
   "license": "MIT",
   "dependencies": {
+    "os-utils": "^0.0.14",
     "puppeteer-core": "^19.7.0",
     "yargs": "^17.6.2"
   },
   "devDependencies": {
+    "@types/os-utils": "^0.0.1",
     "@types/yargs": "^17.0.22"
   },
   "files": [
     "/dist",
-    "/LICENSE"
+    "/LICENSE",
+    "/bin"
   ],
   "repository": {
     "type": "git",
