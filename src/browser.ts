@@ -26,6 +26,7 @@ export class CustomBrowser {
                 '--no-zygote',
                 '--disable-gpu',
                 '--disable-speech-api',
+                '--window-size=800,1280'
             ]
         });
     }
@@ -34,7 +35,7 @@ export class CustomBrowser {
 
         const page = await this.browser.newPage();
         await page.setRequestInterception(true);
-        await page.setViewport({ width: 1280, height: 800 })
+        await page.setViewport({ width: 800, height: 1280 })
         page.on("request", req => { // optimization
             const url = req.url();
             if (
