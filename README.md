@@ -3,7 +3,7 @@ A puppeteer-core powered scraper for Twitter.
 
 ![](https://img.shields.io/npm/l/@lilyn/twitter-scraper?style=flat-square) ![](https://img.shields.io/npm/v/@lilyn/twitter-scraper?style=flat-square)
 
-
+### Typescript Usage
 It's still in a minimal state, will add new features to it soon.
 ```ts
 async function main() {
@@ -28,6 +28,29 @@ async function main() {
     // dont forget to close the browser
     await browser.close()
 }
+```
+
+### CLI Usage
+```
+$ twitter-scraper --help
+Commands:
+  cli.js getProfile [at]                    Get the profile of the user/s.      
+  cli.js getTweetsByPage [number-of-pages]  Get the tweets of a user/s by pages.
+  [at]
+  cli.js getTweetsUntilID [at] [id]         Scan every tweet until it encounters
+                                            the id. Example: getTweetsUntilID -@
+                                            LilynHana -id 9342084 -@ Soleil -id
+                                            89734
+
+Options:
+  --version   Show version number                                      [boolean]
+  --path      The file path of your chrome browser!
+     [string] [default: "C:/Program Files/Google/Chrome/Application/chrome.exe"]
+  --filepath  The file path to write the results on! Note: Needs full file path!
+                                                                        [string]
+  --headless  If puppeteer would show the window it's working on.
+                                                       [boolean] [default: true]
+  --help      Show help                                                [boolean]
 ```
 
 Feel free to send feature requests & issues in the Issues tab.
