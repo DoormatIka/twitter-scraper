@@ -13,7 +13,6 @@
   "author": "DoormatIka",
   "license": "MIT",
   "dependencies": {
-    "os-utils": "^0.0.14",
     "puppeteer-core": "^19.7.0",
     "yargs": "^17.6.2"
   },
