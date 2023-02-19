@@ -4,7 +4,7 @@ import { tabMaker } from "../helpers/tab";
 import { browsered } from "../helpers/browser";
 import { writeFileSync } from "fs"
 
-interface Arg extends Timeouts, Settings {}
+interface Arg extends Timeouts, Settings { }
 
 export const getProfile: CommandModule<unknown, Arg> = {
     command: "getProfile [at]",
@@ -14,13 +14,14 @@ export const getProfile: CommandModule<unknown, Arg> = {
     },
     handler: async (args) => {
         const browser = await browsered(args.path, args.headless)
-    
+
         const tabs = []
         for (const at of args.at) {
             console.log(`@${at}: Loading.`)
             tabs.push(tabMaker(browser, at, (tw) => tw.getProfile(), args.timeout));
         }
 
+        // WRAP THIS IN A FUNCTION OMLLLL
         const data = (await Promise.allSettled(tabs)).map(c => {
             if (c.status === "fulfilled") {
                 return c.value
@@ -31,6 +32,8 @@ export const getProfile: CommandModule<unknown, Arg> = {
         }
 
         console.dir(data, { depth: null })
+        // WRAP THIS IN A FUNCTION OMLLLL
+        // this shit has been duplicated for like 3 files grgrgrbhgkjdfgkj
         await browser.close()
     }
 }
