@@ -64,10 +64,9 @@ Feel free to send feature requests & issues in the Issues tab.
     - Check the Twitter user periodically if they posted something new!
   - [X] Major Performance Boost:
     - 20s-30s~ load times to 7-8s~ load times (for 8 users)
-    New cache for Puppeteer
+  - New cache for Puppeteer
       - faster loading times of twitter.com when warmed up
-    
-    Bluebird promise handling (only available in CLI, you'd need to implement this yourself in TS)
+  - Bluebird promise handling (only available in CLI, you'd need to implement this yourself in TS)
       - better concurrency
       - new `concurrency` option is added to determine how many tabs puppeteer will handle in one go
   - [X] Minor bug-fixes:
