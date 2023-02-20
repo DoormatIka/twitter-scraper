@@ -15,26 +15,31 @@ export class CustomBrowser {
         if (blocked_domains) this.blocked_domains.push(...blocked_domains);
     }
     async init(options: { headless: boolean, execPath: string }) {
-        this.browser = await puppeteer.launch({
-            headless: options.headless,
-            executablePath: options.execPath,
-            args: [
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-accelerated-2d-canvas',
-                '--no-first-run',
-                '--no-zygote',
-                '--disable-gpu',
-                '--disable-speech-api',
-            ]
-        });
+        this.browser = await puppeteer
+            .launch({
+                headless: options.headless,
+                executablePath: options.execPath,
+                args: [
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-accelerated-2d-canvas',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--disable-gpu',
+                    '--disable-speech-api',
+                    '--window-size=800,1280',
+                    '--proxy-server="direct://"',
+                    '--proxy-bypass-list=*'
+                ],
+                userDataDir: "../data" //caching
+            });
     }
     async newPage() {
         if (!this.browser) throw Error("No browser gotten!");
 
         const page = await this.browser.newPage();
         await page.setRequestInterception(true);
-        await page.setViewport({ width: 1280, height: 800 })
+        await page.setViewport({ width: 800, height: 1280 })
         page.on("request", req => { // optimization
             const url = req.url();
             if (

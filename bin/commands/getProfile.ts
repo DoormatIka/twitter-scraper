@@ -1,10 +1,10 @@
 import { CommandModule } from "yargs";
 import { Timeouts, Settings, timeouts } from "./base";
-import { tabMaker } from "../helpers/tab";
-import { browsered } from "../helpers/browser";
-import { writeFileSync } from "fs"
+import { makeTabAndClose, storePrint } from "../helpers"
+import bluebird from "bluebird";
+import { CustomBrowser } from "../../src/browser";
 
-interface Arg extends Timeouts, Settings {}
+interface Arg extends Timeouts, Settings { }
 
 export const getProfile: CommandModule<unknown, Arg> = {
     command: "getProfile [at]",
@@ -13,24 +13,13 @@ export const getProfile: CommandModule<unknown, Arg> = {
         ...timeouts
     },
     handler: async (args) => {
-        const browser = await browsered(args.path, args.headless)
-    
-        const tabs = []
-        for (const at of args.at) {
-            console.log(`@${at}: Loading.`)
-            tabs.push(tabMaker(browser, at, (tw) => tw.getProfile(), args.timeout));
-        }
+        const browser = new CustomBrowser();
+        await browser.init({ headless: args.headless, execPath: args.path });
 
-        const data = (await Promise.allSettled(tabs)).map(c => {
-            if (c.status === "fulfilled") {
-                return c.value
-            }
-        })
-        if (args.filepath) {
-            writeFileSync(args.filepath, JSON.stringify(data, null, 2))
-        }
-
-        console.dir(data, { depth: null })
+        const result = await bluebird.map(args.at, async (at, i) => {
+            return makeTabAndClose(browser, at, (tw) => tw.getProfile(), args.timeout);
+        }, { concurrency: args.concurrency });
+        storePrint(args.filepath, result);
         await browser.close()
     }
 }

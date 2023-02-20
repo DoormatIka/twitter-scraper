@@ -1,6 +1,6 @@
 {
   "name": "@lilyn/twitter-scraper",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A twitter scraper for all your needs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,17 +13,20 @@
   "author": "DoormatIka",
   "license": "MIT",
   "dependencies": {
-    "os-utils": "^0.0.14",
+    "bluebird": "^3.7.2",
     "puppeteer-core": "^19.7.0",
     "yargs": "^17.6.2"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.38",
     "@types/os-utils": "^0.0.1",
-    "@types/yargs": "^17.0.22"
+    "@types/yargs": "^17.0.22",
+    "typed-emitter": "^2.1.0"
   },
   "files": [
     "/dist",
-    "/LICENSE"
+    "/LICENSE",
+    "/README.md"
   ],
   "repository": {
     "type": "git",

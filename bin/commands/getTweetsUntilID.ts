@@ -1,8 +1,8 @@
 import { CommandModule } from "yargs";
 import { Timeouts, Settings, timeouts } from "./base";
-import { tabMaker } from "../helpers/tab";
-import { browsered } from "../helpers/browser";
-import { writeFileSync } from "fs"
+import { makeTabAndClose, storePrint } from "../helpers"
+import bluebird from "bluebird";
+import { CustomBrowser } from "../../src/browser";
 
 interface Arg extends Timeouts, Settings {
     id: string[]
@@ -19,24 +19,13 @@ export const getTweetsUntilID: CommandModule<unknown, Arg> = {
         ...timeouts
     },
     handler: async (args) => {
-        const browser = await browsered(args.path, args.headless)
+        const browser = new CustomBrowser();
+        await browser.init({ headless: args.headless, execPath: args.path });
     
-        const tabs = []
-        for (let i = 0; i < args.at.length; ++i) {
-            console.log(`@${args.at[i]}: Loading.`);
-            tabs.push(tabMaker(browser, args.at[i], (tw) => tw.getTweetsUntilID(args.id[i]), args.timeout));
-        }
-
-        const data = (await Promise.allSettled(tabs)).map(c => {
-            if (c.status === "fulfilled") {
-                return c.value
-            }
-        })
-        if (args.filepath) {
-            writeFileSync(args.filepath, JSON.stringify(data, null, 2))
-        }
-
-        console.dir(data, { depth: null })
+        const result = await bluebird.map(args.at, async (at, i) => {
+            return makeTabAndClose(browser, at, (tw) => tw.getTweetsUntilID(args.id[i]), args.timeout);
+        }, { concurrency: args.concurrency });
+        storePrint(args.filepath, result);
         await browser.close()
     }
 }
