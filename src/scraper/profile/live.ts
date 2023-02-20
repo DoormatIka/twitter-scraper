@@ -2,14 +2,13 @@ import { Page, ElementHandle } from "puppeteer-core";
 import { parseTweets } from "../../helpers/parse";
 import EventEmitter from "events";
 import TypedEmitter from "typed-emitter";
-import { delay } from "bluebird";
 
 type ProfileEvents = {
     tweet: (a: {
         text: string | null | undefined;
         authorUrl: string;
         posturl: string;
-        context: (string | null)[];
+        context: string | null | undefined;
     }) => void
 }
 
@@ -24,17 +23,31 @@ export class ProfileLiveTracking {
     }
     async trackTweets() {
         setInterval(async () => {
-            this.page.reload()
+            await new Promise(async res => {
+                await this.page.reload({ waitUntil: "networkidle2" })
 
-            const tw = await this.page.$$("[data-testid=\"tweet\"]",);
-            const text = await parseTweets(tw);
-            const currentTweet = text.at(0);
-            if (!currentTweet) return;
+                await this.page.waitForSelector("[data-testid=\"tweet\"]");
+                await this.page.evaluate('window.scrollBy(0, 1500)');
+                const tw = await this.page.$$("[data-testid=\"tweet\"]",);
+                const text = await parseTweets(tw); // performance issue?
+                const currentTweet = text
+                    .filter(v => v.context !== "Pinned Tweet") 
+                    // weird.. ^^^
+                    // should've just removed it before it got parsed, but it takes
+                    // too much resources doing that
+                    // removing before parse:
+                    //      tw (element) => parsed => filtered => parsed (again) => tw (raw)
+                    // removing after parse:
+                    //      tw (element) => parsed => filter => tw 
+                    .at(0);
+                
+                if (!currentTweet) return;
 
-            if (this.tweetId !== currentTweet.postid) {
-                this.emitter.emit("tweet", currentTweet);
-                this.tweetId = currentTweet.postid;
-            }
+                if (this.tweetId !== currentTweet.postid) {
+                    this.emitter.emit("tweet", currentTweet);
+                    this.tweetId = currentTweet.postid;
+                }
+            })
         }, this.msRefresh);
     }
 }
