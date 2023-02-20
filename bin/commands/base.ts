@@ -5,6 +5,7 @@ export interface Timeouts extends Arguments {
 }
 export interface Settings extends Arguments {
     path: string, filepath: string | undefined, headless: boolean,
+    concurrency: number
 }
 
 export const timeouts: CommandBuilder<unknown, Timeouts> = {
@@ -32,5 +33,10 @@ export const settings: CommandBuilder<unknown, Settings> = {
         description: "If puppeteer would show the window it's working on.",
         default: true,
         type: "boolean"
+    },
+    concurrency: {
+        description: "How much tabs puppeteer opens in a run.",
+        default: 3,
+        type: "number"
     }
 }
