@@ -1,5 +1,6 @@
+![twit-puppeteer-loho](https://user-images.githubusercontent.com/68234036/220058870-dcc40d37-68c0-4861-993f-99c794056dba.png) 
 # twitter-scraper
-![twit-puppeteer-loho](https://user-images.githubusercontent.com/68234036/220058870-dcc40d37-68c0-4861-993f-99c794056dba.png)
+
 A puppeteer-core powered scraper for Twitter.
 
 ![](https://img.shields.io/npm/l/@lilyn/twitter-scraper?style=flat-square) ![](https://img.shields.io/npm/v/@lilyn/twitter-scraper?style=flat-square)
