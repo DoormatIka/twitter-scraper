@@ -1,6 +1,7 @@
 import { CustomBrowser } from "../src/browser";
-import { tabMaker } from "../bin/helpers/tab";
-import { round, wait } from "../bin/helpers/misc";
+import { makeTabAndClose } from "../bin/helpers/tab";
+import { round } from "../bin/helpers/misc";
+import { delay } from "../src/helpers/delay";
 /*
 import bluebird from "bluebird"
 
@@ -38,7 +39,7 @@ async function perfCheck() {
             
             console.log(`${profiles.map(v => v?.name)}`)
 
-            await wait(5000);
+            await delay(5000);
 
             console.log(`RSS: ${process.memoryUsage().rss / 1024 / 1024} MB`);
             console.log(`External: ${process.memoryUsage().external / 1024 / 1024} MB`);

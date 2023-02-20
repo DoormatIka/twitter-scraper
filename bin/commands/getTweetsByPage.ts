@@ -1,6 +1,6 @@
 import { CommandModule } from "yargs";
 import { Timeouts, Settings, timeouts } from "./base";
-import { tabMaker, storePrint } from "../helpers";
+import { makeTabAndClose, storePrint } from "../helpers";
 import bluebird from "bluebird";
 import { CustomBrowser } from "../../src/browser";
 
@@ -24,9 +24,9 @@ export const getTweetsByPage: CommandModule<unknown, Arg> = {
         await browser.init({ headless: args.headless, execPath: args.path });
 
         const result = await bluebird.map(args.at, async (at, i) => {
-            return tabMaker(browser, at, (tw) => tw.getTweetsbyPage(args.pages), args.timeout);
+            return makeTabAndClose(browser, at, (tw) => tw.getTweetsbyPage(args.pages), args.timeout);
         }, { concurrency: args.concurrency });
         storePrint(args.filepath, result);
-        await browser.close()
+        await browser.close();
     }
 }
