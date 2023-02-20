@@ -1,4 +1,5 @@
 # twitter-scraper
+![twit-puppeteer-aaa](https://user-images.githubusercontent.com/68234036/220058265-db8cced3-eba3-44b6-aa4a-4ed79fd34f79.png)
 A puppeteer-core powered scraper for Twitter.
 
 ![](https://img.shields.io/npm/l/@lilyn/twitter-scraper?style=flat-square) ![](https://img.shields.io/npm/v/@lilyn/twitter-scraper?style=flat-square)
