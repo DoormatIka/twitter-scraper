@@ -8,6 +8,7 @@ import { getTweetsByPage } from "./commands/getTweetsByPage";
 import { getTweetsUntilID } from "./commands/getTweetsUntilID";
 import { round } from "./helpers/misc";
 import { settings } from "./commands/base";
+import { trackUser } from "./commands/trackUser";
 
 async function main() {
     const start = performance.now();
@@ -17,6 +18,7 @@ async function main() {
         .command(getProfile)
         .command(getTweetsByPage)
         .command(getTweetsUntilID)
+        .command(trackUser)
         .help()
         .demandCommand(1)
         .strict()
