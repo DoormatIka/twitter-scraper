@@ -61,8 +61,10 @@ Feel free to send feature requests & issues in the Issues tab.
 *Updates for 1.1.3*:
   - Major Performance Boost:
     - 20s-30s~ load times to 7-8s~ load times (for 8 users)
+    
     new cache for puppeteer
-        - faster loading times of twitter.com when warmed up
+      - faster loading times of twitter.com when warmed up
+    
     bluebird promise handling (only CLI, you'd need to implement this yourself in TS)
         - better concurrency
         - new `concurrency` option is added to determine how many tabs puppeteer will handle in one go
