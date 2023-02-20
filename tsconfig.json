@@ -1,4 +1,5 @@
 {
+  "exclude": ["./checks", "./dist"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

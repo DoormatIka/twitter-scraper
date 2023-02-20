@@ -13,18 +13,20 @@
   "author": "DoormatIka",
   "license": "MIT",
   "dependencies": {
-    "@types/bluebird": "^3.5.38",
     "bluebird": "^3.7.2",
     "puppeteer-core": "^19.7.0",
     "yargs": "^17.6.2"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.38",
     "@types/os-utils": "^0.0.1",
-    "@types/yargs": "^17.0.22"
+    "@types/yargs": "^17.0.22",
+    "typed-emitter": "^2.1.0"
   },
   "files": [
     "/dist",
-    "/LICENSE"
+    "/LICENSE",
+    "/README.md"
   ],
   "repository": {
     "type": "git",

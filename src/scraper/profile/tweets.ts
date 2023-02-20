@@ -49,7 +49,7 @@ export class ProfileTweetsHandler {
         text: string | null | undefined;
         authorUrl: string;
         posturl: string;
-        context: (string | null)[];
+        context: string | null | undefined;
     }[]) {
         const ids = posts.map(v => v.posturl);
         return posts.filter((v, i) => !ids.includes(v.posturl, i + 1));
