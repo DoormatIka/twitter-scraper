@@ -59,21 +59,18 @@ Feel free to send feature requests & issues in the Issues tab.
 
 ### Note:
 *Upcoming Updates for 1.1.3*:
-  - Live Tracking
+  - [ ] Image & Video Parsing in Twitter Posts
+  - [X] Live Tracking
     - Check the Twitter user periodically if they posted something new!
-  
-  - Image & Video Parsing in Twitter Posts
-  
-  - Major Performance Boost:
+  - [X] Major Performance Boost:
     - 20s-30s~ load times to 7-8s~ load times (for 8 users)
-    
     New cache for Puppeteer
       - faster loading times of twitter.com when warmed up
     
     Bluebird promise handling (only available in CLI, you'd need to implement this yourself in TS)
       - better concurrency
       - new `concurrency` option is added to determine how many tabs puppeteer will handle in one go
-  - minor bug-fixes:
+  - [X] Minor bug-fixes:
       - changed resolution values (for twitter scrolling to work)
 
 1.0.0 is broken, don't download it. Go with 1.0.1.
