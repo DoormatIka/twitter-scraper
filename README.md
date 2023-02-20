@@ -66,9 +66,9 @@ Feel free to send feature requests & issues in the Issues tab.
       - faster loading times of twitter.com when warmed up
     
     bluebird promise handling (only CLI, you'd need to implement this yourself in TS)
-        - better concurrency
-        - new `concurrency` option is added to determine how many tabs puppeteer will handle in one go
+      - better concurrency
+      - new `concurrency` option is added to determine how many tabs puppeteer will handle in one go
   - minor bug-fixes:
-        - changed resolution values (for twitter scrolling to work)
+      - changed resolution values (for twitter scrolling to work)
 
 1.0.0 is broken, don't download it. Go with 1.0.1.
