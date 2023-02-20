@@ -15,20 +15,24 @@ export class CustomBrowser {
         if (blocked_domains) this.blocked_domains.push(...blocked_domains);
     }
     async init(options: { headless: boolean, execPath: string }) {
-        this.browser = await puppeteer.launch({
-            headless: options.headless,
-            executablePath: options.execPath,
-            args: [
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-accelerated-2d-canvas',
-                '--no-first-run',
-                '--no-zygote',
-                '--disable-gpu',
-                '--disable-speech-api',
-                '--window-size=800,1280'
-            ]
-        });
+        this.browser = await puppeteer
+            .launch({
+                headless: options.headless,
+                executablePath: options.execPath,
+                args: [
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-accelerated-2d-canvas',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--disable-gpu',
+                    '--disable-speech-api',
+                    '--window-size=800,1280',
+                    '--proxy-server="direct://"',
+                    '--proxy-bypass-list=*'
+                ],
+                userDataDir: "../data" //caching
+            });
     }
     async newPage() {
         if (!this.browser) throw Error("No browser gotten!");

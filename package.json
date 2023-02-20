@@ -13,6 +13,8 @@
   "author": "DoormatIka",
   "license": "MIT",
   "dependencies": {
+    "@types/bluebird": "^3.5.38",
+    "bluebird": "^3.7.2",
     "puppeteer-core": "^19.7.0",
     "yargs": "^17.6.2"
   },

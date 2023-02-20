@@ -1,8 +1,7 @@
 import { CommandModule } from "yargs";
 import { Timeouts, Settings, timeouts } from "./base";
-import { tabMaker } from "../helpers/tab";
-import { browsered } from "../helpers/browser";
-import { writeFileSync } from "fs"
+import { tabMaker, browsered, storePrint } from "../helpers"
+import bluebird from "bluebird";
 
 interface Arg extends Timeouts, Settings { }
 
@@ -13,27 +12,12 @@ export const getProfile: CommandModule<unknown, Arg> = {
         ...timeouts
     },
     handler: async (args) => {
-        const browser = await browsered(args.path, args.headless)
+        const browser = await browsered(args.path, args.headless);
 
-        const tabs = []
-        for (const at of args.at) {
-            console.log(`@${at}: Loading.`)
-            tabs.push(tabMaker(browser, at, (tw) => tw.getProfile(), args.timeout));
-        }
-
-        // WRAP THIS IN A FUNCTION OMLLLL
-        const data = (await Promise.allSettled(tabs)).map(c => {
-            if (c.status === "fulfilled") {
-                return c.value
-            }
-        })
-        if (args.filepath) {
-            writeFileSync(args.filepath, JSON.stringify(data, null, 2))
-        }
-
-        console.dir(data, { depth: null })
-        // WRAP THIS IN A FUNCTION OMLLLL
-        // this shit has been duplicated for like 3 files grgrgrbhgkjdfgkj
+        const result = await bluebird.map(args.at, async (at, i) => {
+            return tabMaker(browser, at, (tw) => tw.getProfile(), args.timeout);
+        }, { concurrency: args.concurrency });
+        storePrint(args.filepath, result);
         await browser.close()
     }
 }
