@@ -34,6 +34,7 @@ async function main() {
 
 ### CLI Usage
 ```
+
 $ twitter-scraper
 Commands:
   bin.js getProfile [at]                    Get the profile of the user/s.
@@ -64,7 +65,7 @@ Feel free to send feature requests & issues in the Issues tab.
 If you want to ask me about stuff, send me a DM at Discord: `Alice_#5945`.
 
 ### Note:
-*Latest Update: 1.2.0*:
+*Latest Update: 1.2.0:*
   - [X] Image & Video Parsing in Twitter Posts
   - [X] Live Tracking
     - Check the Twitter user periodically if they posted something new!
