@@ -9,11 +9,20 @@ export async function parseTweets(tweets: ElementHandle<Element>[]) {
             text: await parseText(e),
             authorUrl: authorUrl,
             posturl: postUrl,
+            postid: parsePostID(postUrl),
             context: await parseSocialContext(e)
         });
     }
     return texts;
 }
+function parsePostID(url: string) {
+    const id = url.match(/https:\/\/.*?\/status\/(\d+)/);
+    if (id) {
+        return id[1];
+    }
+    return "";
+}
+// console.log(parsePostID("https://twitter.com/zuckkk_/status/1627455375346900993"));
 async function parseText(tweet: ElementHandle<Element>) {
     await tweet.waitForSelector("span");
     const e = await tweet.$("div[data-testid=\"tweetText\"] span");
