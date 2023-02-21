@@ -8,7 +8,7 @@
     "twitter-scraper": "/dist/bin/cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./dist/test"
   },
   "author": "DoormatIka",
   "license": "MIT",
