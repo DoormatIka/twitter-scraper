@@ -52,24 +52,3 @@ async function parseTweetPhoto(tweet: ElementHandle<Element>) {
     }
     return images
 }
-
-// single-photo: $$ [data-testid=\"tweetPhoto\"] img
-// large: https://pbs.twimg.com/media/FpYhnVHacAI1-YX?format=jpg&amp;name=large
-// small: https://pbs.twimg.com/media/FpYhnVHacAI1-YX?format=jpg&amp;name=small
-
-// multiple-photos: 
-//      - class it by link (a class)
-//      - a class has the link as an href with the link:
-//          - "/bannedvtmemes/status/1627147714977992710/photo/x"
-//          - x signifying a number - e.g: 1
-
-//      - contents of (a class):
-//          - an img html tag
-//          - get the href there and add it to a collection of imgs (classed by link)
-
-/*
-    Eg:
-        const bannedvtmemes_post_5435094385 = [
-            "photo link", "photo link", "video link", "etc."
-        ]
-*/
