@@ -1,4 +1,4 @@
-import { Page, ElementHandle } from "puppeteer-core";
+import { Page } from "puppeteer-core";
 import { parseTweets } from "../../helpers/parse";
 import EventEmitter from "events";
 import TypedEmitter from "typed-emitter";
@@ -21,6 +21,9 @@ export class ProfileLiveTracking {
     getEmitter() {
         return this.emitter;
     }
+    getTweetID() {
+        return this.tweetId;
+    }
     async trackTweets() {
         setInterval(async () => {
             await new Promise(async res => {
@@ -31,18 +34,9 @@ export class ProfileLiveTracking {
                 const tw = await this.page.$$("[data-testid=\"tweet\"]",);
                 const text = await parseTweets(tw); // performance issue?
                 const currentTweet = text
-                    .filter(v => v.context !== "Pinned Tweet") 
-                    // weird.. ^^^
-                    // should've just removed it before it got parsed, but it takes
-                    // too much resources doing that
-                    // removing before parse:
-                    //      tw (element) => parsed => filtered => parsed (again) => tw (raw)
-                    // removing after parse:
-                    //      tw (element) => parsed => filter => tw 
-                    .at(0);
-                
+                    .filter(v => v.context !== "Pinned Tweet")
+                    .at(0);                
                 if (!currentTweet) return;
-
                 if (this.tweetId !== currentTweet.postid) {
                     this.emitter.emit("tweet", currentTweet);
                     this.tweetId = currentTweet.postid;
