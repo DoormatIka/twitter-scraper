@@ -1,6 +1,6 @@
 {
   "name": "@lilyn/twitter-scraper",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "A twitter scraper for all your needs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,7 @@
     "twitter-scraper": "/dist/bin/cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./dist/test"
   },
   "author": "DoormatIka",
   "license": "MIT",

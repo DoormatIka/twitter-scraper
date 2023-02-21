@@ -7,6 +7,8 @@ import { ProfileHeaderHandler, ProfileLiveTracking, ProfileTweetsHandler } from 
  * 
  * @param {CustomBrowser} browser - Custom Browser
  * @param {at} at - The @ of the user you want to track.
+ * @param {number} msRefresh - the amount of ms it would reload the page for live tracking
+ * @param {number} timeout - how long puppeteer will wait for a page until it throws an error (ms)
  */
 export class TwitterUser { // wrapper object
     private profileHandler?: ProfileHeaderHandler
@@ -20,6 +22,14 @@ export class TwitterUser { // wrapper object
         private msRefresh?: number,
         private timeout?: number
     ) {}
+    async getJSON() {
+        return {
+            tweetId: this.liveTracking?.getTweetID(),
+            at: this.at,
+            msRefresh: this.msRefresh,
+            timeout: this.timeout
+        }
+    }
     async init() {
         this.page = await this.browser.newPage();
         try {
