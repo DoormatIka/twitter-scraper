@@ -14,7 +14,7 @@ export class CustomBrowser {
     constructor(blocked_domains?: string[]) {
         if (blocked_domains) this.blocked_domains.push(...blocked_domains);
     }
-    async init(options: { headless: boolean, execPath: string }) {
+    async init(options: { headless: boolean, execPath: string }, cache?: boolean) {
         this.browser = await puppeteer
             .launch({
                 headless: options.headless,
@@ -31,7 +31,7 @@ export class CustomBrowser {
                     '--proxy-server="direct://"',
                     '--proxy-bypass-list=*'
                 ],
-                userDataDir: "../data" //caching
+                userDataDir: cache ? "../data" : undefined //caching
             });
     }
     async newPage() {
