@@ -74,6 +74,11 @@ export class TwitterUser { // wrapper object
         await this.liveTracking.trackTweets();
         return this.liveTracking.getEmitter();
     }
+    async getPreviousTweetID() { // last tweet sent from trackTweets
+        if (!this.liveTracking) return;
+        
+        return this.liveTracking.getTweetID();
+    }
     async close() {
         if (!this.page) throw Error(`Run \`init()\` on TwitterUser \"${this.at}\".`)
         await this.page.close();
