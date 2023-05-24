@@ -66,7 +66,7 @@ Not enough non-option arguments: got 0, need at least 1
 ```
 Feel free to send feature requests & issues in the Issues tab.
 
-If you want to ask me about stuff, send me a DM at Discord: `Alice_#5945`.
+If you want to ask me about stuff, send me a DM at Discord: `realalice#5699`.
 
 ### Note:
 *Latest Update: 1.2.0:*
